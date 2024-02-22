@@ -17,7 +17,7 @@ spring:
       ddl-auto: update
 jwt:
   expires-hour: 6
-  exclude-path-patterns: /login
+  exclude-path-patterns: /,/index.html,/assets/**,/login
 login:
   username: "admin"
   password: "admin"
