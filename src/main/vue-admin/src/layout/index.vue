@@ -2,6 +2,9 @@
   <el-container>
     <el-header>
       <div>证书自动更新</div>
+      <div>
+        <el-button type="primary" text @click="handleLogout">退出</el-button>
+      </div>
     </el-header>
     <el-container>
       <el-aside width="200px">
@@ -27,10 +30,14 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView, useRoute } from 'vue-router'
+import { RouterView, useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
+import useStore from '@/stores'
 
+const { user } = useStore()
 const route = useRoute()
+const router = useRouter();
+
 const activeMenu = computed(() => {
   const { meta, path } = route
   // if set path, the sidebar will highlight the path you set
@@ -39,6 +46,12 @@ const activeMenu = computed(() => {
   }
   return path
 })
+
+const handleLogout=()=>{
+  user.logout().then(()=>{
+    router.push(`/login?redirect=${route.fullPath}`);
+  })
+}
 </script>
 
 <style scoped>

@@ -22,23 +22,30 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, toRefs } from 'vue'
+import { reactive, ref, toRefs ,watch} from 'vue'
 // 组件依赖
 import { ElForm, ElInput } from 'element-plus'
 /// type
 import type { LoginReq } from '@/api/login/type/login'
+
 import useStore from '@/stores'
+import router from '@/router'
+
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const { user } = useStore()
 
 const loginFormRef = ref(ElForm)
-
-const { user } = useStore()
 const state = reactive({
   loginForm: {} as LoginReq,
   loginRules: {
     username: [{ required: true, trigger: 'blur', message: '账号必填' }],
     password: [{ required: true, trigger: 'blur', message: '密码必填' }]
   },
-  loading: false
+  loading: false,
+  redirect: '',
+  otherQuery: {}
 })
 
 const { loginForm, loginRules, loading } = toRefs(state)
@@ -48,14 +55,37 @@ function handleLogin() {
     if (valid) {
       state.loading = true
       user.login(state.loginForm).then(() => {
-        window.location.href = '/'
-      }).finally(()=>{
+        router.push({ path: state.redirect || '/', query: state.otherQuery })
+      }).finally(() => {
         state.loading = false
       })
     } else {
       return false
     }
   })
+}
+
+watch(
+  route,
+  () => {
+    const query = route.query;
+    if (query) {
+      state.redirect = query.redirect as string;
+      state.otherQuery = getOtherQuery(query);
+    }
+  },
+  {
+    immediate: true
+  }
+);
+
+function getOtherQuery(query: any) {
+  return Object.keys(query).reduce((acc: any, cur: any) => {
+    if (cur !== 'redirect') {
+      acc[cur] = query[cur];
+    }
+    return acc;
+  }, {});
 }
 </script>
 
