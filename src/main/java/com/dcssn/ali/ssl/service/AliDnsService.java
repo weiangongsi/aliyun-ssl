@@ -37,7 +37,7 @@ public class AliDnsService {
             addDomainRecordResponse.get().getBody();
         } else {
             List<DescribeDomainRecordsResponseBody.Record> recordList = describeDomainRecordsResponseBody.getDomainRecords().getRecord();
-            DescribeDomainRecordsResponseBody.Record record = recordList.getFirst();
+            DescribeDomainRecordsResponseBody.Record record = recordList.get(0);
             String curValue = record.getValue();
             if (!curValue.equals(value)) {
                 UpdateDomainRecordRequest updateDomainRecordRequest = UpdateDomainRecordRequest.builder().recordId(record.getRecordId()).rr(rr).type(type).value(value).build();
