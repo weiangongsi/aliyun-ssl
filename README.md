@@ -25,7 +25,7 @@ ali:
 
 打包
 ```shell
-mvn -Dmaven.test.skip=true clean package
+mvn '-Dmaven.test.skip=true' clean package
 ```
 
 运行
@@ -40,7 +40,7 @@ java -jar alissl.jar
 
 打包
 ```shell
-mvn -Dmaven.test.skip=true clean package
+mvn '-Dmaven.test.skip=true' clean package
 ```
 
 构建镜像
