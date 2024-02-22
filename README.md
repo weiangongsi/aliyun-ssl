@@ -30,7 +30,7 @@ mvn '-Dmaven.test.skip=true' clean package
 
 运行
 ```shell
-java -jar alissl.jar
+java -jar aliyun-ssl.jar
 ```
 
 访问 http://localhost:90
@@ -45,10 +45,10 @@ mvn '-Dmaven.test.skip=true' clean package
 
 构建镜像
 ``` shell
-docker build -t  alissl:1.0.0 .
+docker build -t  aliyun-ssl:1.0.0 .
 ```
 
 运行
 ```shell
-docker run  -d -p 90:90  --name alissl alissl:1.0.0
+docker run  -d -p 90:90  --name aliyun-ssl aliyun-ssl:1.0.0
 ```
