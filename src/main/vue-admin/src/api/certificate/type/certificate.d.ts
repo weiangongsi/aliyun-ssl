@@ -2,7 +2,6 @@ export interface Certificate {
   instanceId: string,
   name: string,
   domain: string,
-  commonName: string,
   sans: string,
   orderId: number,
   certificateId: number,

@@ -64,6 +64,10 @@ public class CertificateDeployServiceImpl implements CertificateDeployService {
         } catch (Exception e) {
             throw new ProjectException(ProjectResultMessage.CODE_001);
         }
+        Optional<Certificate> certificateOptional = certificateRepository.findFirstByDomainAndStatus(req.getDomain(), "ISSUED");
+        if (certificateOptional.isEmpty()) {
+            certificateOptional = certificateRepository.findFirstByDomainAndStatus(req.getDomain(), "WILLEXPIRED");
+        }
         Optional<CertificateDeploy> certificateDeployOptional = certificateDeployRepository.findById(req.getDomain());
         CertificateDeploy certificateDeploy;
         if (certificateDeployOptional.isPresent()) {
@@ -77,6 +81,10 @@ public class CertificateDeployServiceImpl implements CertificateDeployService {
             certificateDeploy.setShell(req.getShell());
         } else {
             certificateDeploy = certificateDeployConvertMapper.certificateDeployAddReqToCertificateDeploy(req);
+        }
+        if (certificateOptional.isPresent()) {
+            Certificate certificate = certificateOptional.get();
+            certificateDeploy.setNextDeployDate(certificate.getEndDate().minusDays(1));
         }
         certificateDeployRepository.save(certificateDeploy);
     }

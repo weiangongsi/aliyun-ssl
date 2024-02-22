@@ -27,6 +27,7 @@
           <template v-if="scope.row.sans">
             <p v-for="item in scope.row.sans.split(',')" :key="item">{{ item }}</p>
           </template>
+          <template v-else>{{scope.row.domain}}</template>
         </template>
       </el-table-column>
       <el-table-column prop="deployStatus" label="部署结果">
@@ -59,7 +60,7 @@
           <template v-if="scope.row.status==='PAYED'">
             <el-button type="primary" link @click="handleCancel(scope.row)">取消</el-button>
           </template>
-          <template v-if="scope.row.status==='ISSUED'">
+          <template v-if="scope.row.status==='ISSUED' || scope.row.status==='WILLEXPIRED'">
             <el-button type="primary" link @click="handleDeploy(scope.row)">部署</el-button>
           </template>
         </template>
