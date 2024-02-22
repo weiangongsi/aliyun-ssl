@@ -1,4 +1,4 @@
-FROM openjdk:21
+FROM openjdk:17
 VOLUME /tmp
 ADD target/aliyun-ssl.jar app.jar
 ENV TZ=Asia/Shanghai
