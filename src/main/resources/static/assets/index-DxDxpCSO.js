@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as t,s,m as e}from"./index-0Htkk6bB.js";const n={},c=e("h2",null,"首页",-1),_=e("p",null,"自动更新域名证书",-1),r=[c,_];function a(l,d){return t(),s("div",null,r)}const m=o(n,[["render",a]]);export{m as default};
