@@ -24,3 +24,7 @@ login:
 ali:
   accessKeyId: "accessKeyId"
   accessKeySecret: "accessKeySecret"
+  username: "任总" #申请证书联系人姓名
+  phone: "123456**" #申请证书联系人电话
+  email: "123**@163.com" #申请证书联系人邮箱
+  companyName: "**科技有限公司" #申请证书公司名称

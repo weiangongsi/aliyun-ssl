@@ -7,6 +7,7 @@ import com.dcssn.ali.ssl.entity.Certificate;
 import com.dcssn.ali.ssl.repository.CertificateRepository;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -36,6 +37,18 @@ public class AliSslService {
 
     @Resource
     private CertificateRepository certificateRepository;
+
+    @Value("${ali.username}")
+    private String username;
+
+    @Value("${ali.phone}")
+    private String phone;
+
+    @Value("${ali.email}")
+    private String email;
+
+    @Value("${ali.companyName}")
+    private String companyName;
 
     @Transactional
     public void syncAllCertificate() {
@@ -148,7 +161,21 @@ public class AliSslService {
     }
 
     public void apply(String domain) throws Exception {
-        CreateCertificateForPackageRequestRequest createCertificateForPackageRequestRequest = CreateCertificateForPackageRequestRequest.builder().productCode("digicert-free-1-free").domain(domain).validateType("DNS").build();
+        CreateCertificateForPackageRequestRequest.Builder builder = CreateCertificateForPackageRequestRequest.builder();
+        builder.productCode("digicert-free-1-free").domain(domain).validateType("DNS");
+        if (StringUtils.hasText(username)) {
+            builder.username(username);
+        }
+        if (StringUtils.hasText(phone)) {
+            builder.phone(phone);
+        }
+        if (StringUtils.hasText(email)) {
+            builder.email(email);
+        }
+        if (StringUtils.hasText(companyName)) {
+            builder.companyName(companyName);
+        }
+        CreateCertificateForPackageRequestRequest createCertificateForPackageRequestRequest = builder.build();
         CompletableFuture<CreateCertificateForPackageRequestResponse> response2 = aliSslAsyncClient.createCertificateForPackageRequest(createCertificateForPackageRequestRequest);
         response2.get().getBody();
     }
