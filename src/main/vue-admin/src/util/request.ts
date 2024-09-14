@@ -1,8 +1,6 @@
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import router from '@/router'
-
 // 创建 axios 实例
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -35,9 +33,11 @@ service.interceptors.response.use(
       localStorage.clear() // 清除浏览器全部缓存
       ElMessageBox.confirm('当前页面已失效，请重新登录', '提示', {
         showClose: false,
-        showCancelButton: false
+        showCancelButton: false,
+        closeOnClickModal: false,
+        closeOnPressEscape: false,
       }).then(() => {
-        router.push('/login')
+        window.location.href = '/'
       })
       return Promise.reject(new Error(message || 'Error'))
     } else {

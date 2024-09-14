@@ -42,7 +42,7 @@ public class ScheduleTask {
     @Resource
     private CertificateDeployRepository certificateDeployRepository;
 
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void testScheduleTask1() throws Exception {
         // 开启自动部署并且下次部署在今天之前
         List<CertificateDeploy> list = certificateDeployRepository.findByCronStatusAndNextDeployDateBeforeOrDeployDateIsNull("ON", LocalDate.now().plusDays(1));
